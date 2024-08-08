@@ -1,0 +1,36 @@
+{# retrieve_conversations.html #}
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+    <div class="retrieve-form"
+         style="display: flex; align-items: center; margin-bottom: 20px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+        <h1 style="margin-right: 20px;"></h1>
+        <form method="post" style="display: flex; align-items: center;">
+            {% csrf_token %}
+            <div style="margin-right: 20px;">
+                {{ form.date_from.label }} {{ form.date_from }}
+            </div>
+            <div style="margin-right: 20px;">
+                {{ form.date_to.label }} {{ form.date_to }}
+            </div>
+            <button type="submit"
+                    style="padding: 8px 16px; color: #fff; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer;">
+                Retrieve Conversation
+            </button>
+        </form>
+    </div>
+
+    {% if response %}
+        <div class="results-container"
+             style="margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+            <h2>Results</h2>
+            {% if response.message == "Success" %}
+                <p>File Name: {{ response.file_name }}</p>
+            {% else %}
+                <p>Error is: {{ response.message }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {{ block.super }}
+{% endblock %}
